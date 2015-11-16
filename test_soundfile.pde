@@ -8,18 +8,20 @@ FFT fft;
 AudioDevice device;
 
 
-float getrate;
 
+float getrate;
 
 //declare scaling factor
 int scale = 5;
 
 //# of FFT bands
 int bands = 128;
+float playbackRate = 1;
+float volume = 1;
 
 void setup() {
-  
-  DnB = new SoundFile(this, "DnB.mp3");
+
+  DnB = new SoundFile(this, "tf.mp3");
 
   DnB.loop();
 
@@ -29,26 +31,27 @@ void setup() {
 
   fill(255);
   textSize(20);
+}
+void draw() {
+  background(0);
+  
+  playbackRate =  map(mouseX, 0, width, 0.5, 2.0);
+  DnB.rate(playbackRate);
+
+
+volume = (map(mouseY, 0, width, 0.2, 1.5)); 
+  DnB.amp(volume);
+
   text(DnB.duration() + " Seconds", 350, 50);
   text(DnB.sampleRate() + " Hz", 350, 70);
   text(DnB.frames() + " Frames", 350, 90);
-}
-void draw() {
-   DnB.rate(map(mouseX, 0, width, 0.5, 2.0));
-   
-     DnB.amp(map(mouseY, 0, width, 0.2, 1.0)); 
+  text(playbackRate + " Rate", 350, 110);
+  text(volume + " Volume", 350, 130);
 }
 
 
 void keyPressed() {
-  if (key == ']') {
-    DnB.rate(4);
-  }
-  if (key == '[') {
-    DnB.rate(0.5);
-  }
-
-  if (key == 'p') {
-    DnB.rate(1);
-  }
+ 
+  
+  
 }
